@@ -110,7 +110,7 @@ body {
 /* ── Typography ────────────────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
-  font-weight: 800;
+  font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
@@ -281,7 +281,7 @@ select.input {
 .sidebar-logo {
   font-family: var(--font-display);
   font-size: 1.25rem;
-  font-weight: 800;
+  font-weight: 400;
   color: var(--orange);
   padding: var(--sp-1) 0;
   margin-bottom: var(--sp-2);
@@ -347,7 +347,7 @@ select.input {
 
 .topbar-title h1 {
   font-size: 1.5rem;
-  font-weight: 800;
+  font-weight: 400;
 }
 .topbar-title p {
   font-size: 0.85rem;
@@ -433,7 +433,7 @@ select.input {
 .banana-task {
   font-family: var(--font-display);
   font-size: 1.3rem;
-  font-weight: 800;
+  font-weight: 400;
   margin: var(--sp-1) 0;
   cursor: pointer;
 }
@@ -518,7 +518,7 @@ select.input {
 .task-section-title {
   font-family: var(--font-display);
   font-size: 0.8rem;
-  font-weight: 800;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--text-muted);
@@ -619,7 +619,7 @@ select.input {
 }
 .project-name {
   font-family: var(--font-display);
-  font-weight: 800;
+  font-weight: 400;
   font-size: 1rem;
 }
 .project-task-count {
