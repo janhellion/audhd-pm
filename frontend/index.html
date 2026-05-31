@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AuDHD Task Manager — a task platform built for neurodivergent minds">
+  <meta name="theme-color" content="#07070d">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="/manifest.json">
+  <title>pm · AuDHD Task Manager</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div id="app" class="app-layout">
+  <!-- Sidebar -->
+  <nav class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+      <span>⌂</span>
+      <span>pm <small>audhd</small></span>
+    </div>
+    <button class="nav-item active" data-view="dashboard" onclick="switchView('dashboard')">
+      <span>◉</span> Dashboard
+    </button>
+    <button class="nav-item" data-view="tasks" onclick="switchView('tasks')">
+      <span>☰</span> Tasks
+    </button>
+    <button class="nav-item" data-view="projects" onclick="switchView('projects')">
+      <span>▣</span> Projects
+    </button>
+    <button class="nav-item" data-view="settings" onclick="switchView('settings')">
+      <span>⚙</span> Settings
+    </button>
+
+    <div style="margin-top: auto; padding-top: var(--sp-lg); border-top: 1px solid var(--glass-border);">
+      <div class="energy-label mb-sm">Energy</div>
+      <div class="energy-pills" id="energyPills">
+        <span class="energy-pill low" data-level="low" onclick="setEnergy('low')" title="Low energy — rest & simple tasks"></span>
+        <span class="energy-pill med active" data-level="medium" onclick="setEnergy('medium')" title="Medium energy — normal flow"></span>
+        <span class="energy-pill high" data-level="high" onclick="setEnergy('high')" title="High energy — tackle anything"></span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main area -->
+  <main class="main-content">
+    <!-- Topbar -->
+    <div class="topbar">
+      <div class="topbar-title">
+        <h1 id="viewTitle">Dashboard</h1>
+        <p id="viewSubtitle">your current landscape</p>
+      </div>
+      <div class="topbar-actions" id="topbarActions">
+        <button class="btn btn-orange" onclick="openQuickCapture()">+ New Task</button>
+      </div>
+    </div>
+
+    <!-- Burnout banner (hidden by default) -->
+    <div class="burnout-banner" id="burnoutBanner" style="display:none;">
+      <span class="icon">⟁</span>
+      <span>Your deferral rate is higher than usual. Safe mode is available.</span>
+      <button class="btn btn-ghost" onclick="toggleSafeMode()">Enter Safe Mode</button>
+      <button class="btn btn-ghost" onclick="this.closest('.burnout-banner').style.display='none'">✕</button>
+    </div>
+
+    <!-- View containers -->
+    <div id="view-dashboard" class="view-container"></div>
+    <div id="view-tasks" class="view-container" style="display:none;"></div>
+    <div id="view-projects" class="view-container" style="display:none;"></div>
+    <div id="view-settings" class="view-container" style="display:none;"></div>
+  </main>
+</div>
+
+<!-- Modal container -->
+<div id="modalContainer"></div>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
