@@ -37,7 +37,7 @@
   /* Text */
   --text-primary: #1c1b22;
   --text-secondary: #5b596b;
-  --text-muted: #9a98a8;
+  --text-muted: #6b697b;
   --text-inverse: #ffffff;
 
   /* Status — orange-centric, no red/green defaults */
@@ -75,7 +75,7 @@
   --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
   --shadow-elevated: 0 4px 16px rgba(0, 0, 0, 0.08);
   --shadow-modal: 0 8px 32px rgba(0, 0, 0, 0.10);
-  --shadow-focus: 0 0 0 3px var(--orange-dim);
+  --shadow-focus: 0 0 0 3px rgba(235, 94, 40, 0.35);
 
   /* Transitions */
   --transition-fast: 150ms ease;
@@ -167,6 +167,10 @@ a:hover { opacity: 0.80; }
   background: var(--bg-glass-strong);
   border-color: var(--border-strong);
 }
+.btn:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
+}
 .btn:active { transform: scale(0.97); }
 
 /* Orange = primary/attention */
@@ -213,6 +217,11 @@ a:hover { opacity: 0.80; }
 .input:focus {
   border-color: var(--orange);
   box-shadow: 0 0 0 3px var(--orange-dim);
+}
+.input:focus-visible {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(235, 94, 40, 0.35);
 }
 .input::placeholder { color: var(--text-muted); }
 
