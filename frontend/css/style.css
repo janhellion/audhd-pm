@@ -740,6 +740,147 @@ body.safe-mode { font-size: 17px; }
   gap: var(--sp-2);
 }
 
+/* ── Micro-Animations & Interaction Feedback ────────────────────────── */
+/* All animations respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Card lift on hover */
+.glass {
+  transition: transform var(--transition-med), box-shadow var(--transition-med), background var(--transition-med), border-color var(--transition-med);
+}
+.glass:hover {
+  transform: translateY(-1px);
+}
+
+/* Button press feedback */
+.btn:active {
+  transform: scale(0.96);
+}
+
+/* Task check completion animation */
+.task-check {
+  transition: all var(--transition-med), transform var(--transition-fast);
+}
+.task-check:active {
+  transform: scale(0.85);
+}
+.task-check.done {
+  animation: checkPop 300ms ease;
+}
+@keyframes checkPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+/* Banana zone gentle pulse */
+.banana-zone {
+  transition: border-color var(--transition-med), box-shadow var(--transition-med);
+}
+.banana-zone:hover {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 1px var(--orange-dim);
+}
+
+/* View fade-in on load */
+@keyframes viewFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.view-container {
+  animation: viewFadeIn 250ms ease;
+}
+
+/* Modal entrance */
+@keyframes overlayFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.modal-overlay {
+  animation: overlayFadeIn 200ms ease;
+}
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.modal {
+  animation: modalSlideUp 300ms ease;
+}
+
+/* Nav item active indicator */
+.nav-item {
+  position: relative;
+}
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 60%;
+  background: var(--orange);
+  border-radius: 0 2px 2px 0;
+  animation: navActiveIn 200ms ease;
+}
+@keyframes navActiveIn {
+  from { height: 0; opacity: 0; }
+  to { height: 60%; opacity: 1; }
+}
+
+/* Energy pill active state */
+.energy-pill {
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+.energy-pill:hover {
+  transform: scale(1.25);
+}
+.energy-pill:active {
+  transform: scale(0.9);
+}
+
+/* Task card entrance */
+.task-card {
+  animation: cardIn 200ms ease both;
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Banana task special hover */
+.banana-task {
+  transition: color var(--transition-fast);
+}
+.banana-task:hover {
+  color: var(--orange);
+}
+
+/* Complete button subtle glow */
+.btn-orange:hover {
+  box-shadow: 0 2px 12px var(--orange-glow);
+}
+
+/* Burnout banner entrance */
+.burnout-banner {
+  animation: slideDown 300ms ease;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); max-height: 0; }
+  to { opacity: 1; transform: translateY(0); max-height: 100px; }
+}
+
+/* Empty state subtle fade */
+.empty-state {
+  animation: fadeIn 400ms ease;
+}
+
 /* ── Responsive ─────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .sidebar {

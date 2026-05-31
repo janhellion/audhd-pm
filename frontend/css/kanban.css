@@ -117,3 +117,32 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Kanban Drag & Drop ────────────────────────────────────────────── */
+.kanban-card[draggable] {
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.kanban-card[draggable]:active {
+  cursor: grabbing;
+}
+
+.kanban-card.dragging {
+  opacity: 0.4;
+  transform: rotate(3deg) scale(0.95);
+}
+
+.kanban-card-list {
+  min-height: 60px;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+  border-radius: var(--radius);
+  padding: 2px;
+}
+
+.kanban-card-list.drag-over {
+  background: var(--orange-dim);
+  border: 1px dashed var(--orange);
+}
+
+/* Touch drag clone gets these from inline styles */
