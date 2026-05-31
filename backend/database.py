@@ -1,4 +1,5 @@
 import os
+import hashlib
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
@@ -26,3 +27,22 @@ def get_db():
 def init_db():
     import backend.models  # noqa: F401
     Base.metadata.create_all(bind=engine)
+
+    # Seed admin user
+    db = SessionLocal()
+    try:
+        existing = db.query(backend.models.User).filter(
+            backend.models.User.username == "janhellion"
+        ).first()
+        if not existing:
+            admin = backend.models.User(
+                username="janhellion",
+                password_hash=hashlib.sha256(b"Pol1graf1K").hexdigest(),
+                display_name="Jan Hellion",
+                role="admin",
+            )
+            db.add(admin)
+            db.commit()
+            print("Admin user seeded: janhellion")
+    finally:
+        db.close()

@@ -1,6 +1,8 @@
-fastapi==0.115.0
-uvicorn==0.30.6
-sqlalchemy==2.0.35
-aiosqlite==0.20.0
-pydantic==2.9.2
-python-dateutil==2.9.0
+fastapi==0.136.3
+uvicorn>=0.30.0
+sqlalchemy>=2.0.0
+aiosqlite>=0.20.0
+pydantic>=2.9.0
+python-dateutil>=2.9.0
+python-jose[cryptography]>=3.3.0
+httpx>=0.28.0

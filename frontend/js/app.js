@@ -417,28 +417,166 @@ async function renderProjects(el) {
    SETTINGS VIEW
    ═══════════════════════════════════════════════════════════════════════ */
 async function renderSettings(el) {
+  let users = [], teams = [], notifStatus = { configured: false };
+  try {
+    users = await get('/users');
+    teams = await get('/teams');
+    notifStatus = await (await fetch('/api/notifications/matrix-status')).json();
+  } catch {}
+
+  const userRows = users.map(u => `
+    <div class="flex items-center" style="gap:var(--sp-2);padding:var(--sp-1) 0;">
+      <span style="flex:1;">${esc(u.username)}</span>
+      <span class="badge ${u.role === 'admin' ? 'badge-banana' : u.role === 'user' ? 'badge-medium' : ''}">${u.role}</span>
+      <span style="font-size:0.8rem;color:var(--text-muted);">${u.is_active ? 'active' : 'inactive'}</span>
+    </div>
+  `).join('');
+
+  const teamRows = teams.map(t => `
+    <div class="flex items-center" style="gap:var(--sp-2);padding:var(--sp-1) 0;">
+      <span style="flex:1;">${esc(t.name)}</span>
+      <span style="font-size:0.8rem;color:var(--text-muted);">${t.member_count} members</span>
+    </div>
+  `).join('');
+
   el.innerHTML = `
-    <div class="glass" style="padding:var(--sp-4);max-width:600px;">
-      <h2 style="font-size:1rem;margin-bottom:var(--sp-3);">System</h2>
-      <div class="form-group">
-        <label>Database location</label>
-        <p class="text-muted" style="font-size:0.85rem;">Local SQLite — data never leaves your server.</p>
+    <div style="display:flex;flex-direction:column;gap:var(--sp-3);max-width:600px;">
+      <!-- System -->
+      <div class="glass" style="padding:var(--sp-4);">
+        <h2 style="font-size:1rem;margin-bottom:var(--sp-3);">System</h2>
+        <div class="form-group">
+          <label>Database</label>
+          <p class="text-muted" style="font-size:0.85rem;">Local SQLite — data never leaves your server.</p>
+        </div>
+        <div class="form-group">
+          <label>Version</label>
+          <p class="text-muted" style="font-size:0.85rem;">AuDHD Task Manager v1.1.0</p>
+        </div>
+        <div class="form-group">
+          <label>Principles</label>
+          <ul style="font-size:0.85rem;color:var(--text-secondary);padding-left:var(--sp-4);list-style-type:'· ';">
+            <li>No streak counters, no deadlines, no guilt</li>
+            <li>Data is local-first and yours only</li>
+            <li>Energy-based scheduling, not calendar blocks</li>
+            <li>Light scheme, sensory-friendly, AuDHD-aware design</li>
+          </ul>
+        </div>
       </div>
-      <div class="form-group">
-        <label>Version</label>
-        <p class="text-muted" style="font-size:0.85rem;">AuDHD Task Manager v1.0.0</p>
+
+      <!-- Users -->
+      <div class="glass" style="padding:var(--sp-4);">
+        <div class="flex items-center justify-between mb-2">
+          <h2 style="font-size:1rem;">Users</h2>
+          <button class="btn btn-ghost" onclick="showAddUser()">+ Add</button>
+        </div>
+        ${userRows || '<p class="text-muted">no users</p>'}
       </div>
-      <div class="form-group">
-        <label>Principles</label>
-        <ul style="font-size:0.85rem;color:var(--text-secondary);padding-left:var(--sp-4);list-style-type:'· ';">
-          <li>No streak counters, no deadlines, no guilt</li>
-          <li>Data is local-first and yours only</li>
-          <li>Energy-based scheduling, not calendar blocks</li>
-          <li>Light scheme, sensory-friendly, AuDHD-aware design</li>
-        </ul>
+
+      <!-- Teams -->
+      <div class="glass" style="padding:var(--sp-4);">
+        <div class="flex items-center justify-between mb-2">
+          <h2 style="font-size:1rem;">Teams</h2>
+          <button class="btn btn-ghost" onclick="showAddTeam()">+ Add</button>
+        </div>
+        ${teamRows || '<p class="text-muted">no teams</p>'}
+      </div>
+
+      <!-- Notifications -->
+      <div class="glass" style="padding:var(--sp-4);">
+        <h2 style="font-size:1rem;margin-bottom:var(--sp-2);">Notifications</h2>
+        <p class="text-muted mb-2" style="font-size:0.85rem;">
+          Status: ${notifStatus.configured
+            ? '<span style="color:var(--status-calm);">✓ Connected</span>'
+            : '<span style="color:var(--status-warn);">○ Not configured</span>'}
+          ${notifStatus.working === false ? ' (test failed)' : ''}
+        </p>
+        <div class="form-group">
+          <label>Matrix Access Token</label>
+          <div class="flex items-center" style="gap:var(--sp-1);">
+            <input class="input" id="matrixTokenInput" placeholder="paste your Matrix token" style="flex:1;">
+            <button class="btn btn-ghost" onclick="saveMatrixToken()">Save</button>
+          </div>
+          <p style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">
+            Get token from Element → Settings → Sessions → Access Token
+          </p>
+        </div>
       </div>
     </div>
   `;
+}
+
+function showAddUser() {
+  showModal(`
+    <h2>Add User</h2>
+    <form id="addUserForm" onsubmit="submitAddUser(event)">
+      <div class="form-group">
+        <label>Username</label>
+        <input class="input" name="username" required>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input class="input" type="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label>Display Name</label>
+        <input class="input" name="display_name">
+      </div>
+      <div class="form-group">
+        <label>Role</label>
+        <select class="input" name="role">
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+      <div style="display:flex;gap:var(--sp-2);justify-content:flex-end;margin-top:var(--sp-4);">
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+        <button type="submit" class="btn btn-orange">Create</button>
+      </div>
+    </form>
+  `);
+}
+
+async function submitAddUser(e) {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  await post('/users', Object.fromEntries(fd.entries()));
+  closeModal();
+  renderView('settings');
+}
+
+function showAddTeam() {
+  showModal(`
+    <h2>New Team</h2>
+    <form id="addTeamForm" onsubmit="submitAddTeam(event)">
+      <div class="form-group">
+        <label>Team Name</label>
+        <input class="input" name="name" required>
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea class="input" name="description" rows="2"></textarea>
+      </div>
+      <div style="display:flex;gap:var(--sp-2);justify-content:flex-end;margin-top:var(--sp-4);">
+        <button type="button" class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+        <button type="submit" class="btn btn-orange">Create</button>
+      </div>
+    </form>
+  `);
+}
+
+async function submitAddTeam(e) {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  await post('/teams', Object.fromEntries(fd.entries()));
+  closeModal();
+  renderView('settings');
+}
+
+async function saveMatrixToken() {
+  const token = document.getElementById('matrixTokenInput').value;
+  if (!token) return;
+  await post('/notifications/matrix-config', { access_token: token });
+  renderView('settings');
 }
 
 /* ═══════════════════════════════════════════════════════════════════════

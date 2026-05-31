@@ -1,0 +1,81 @@
+/* ── Login Screen ────────────────────────────────────────────────────── */
+.login-screen {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-deep);
+  z-index: 2000;
+  padding: var(--sp-3);
+}
+
+.login-card {
+  width: 100%;
+  max-width: 380px;
+  padding: var(--sp-6) var(--sp-4);
+  text-align: center;
+}
+
+.login-logo {
+  font-size: 2.5rem;
+  margin-bottom: var(--sp-1);
+  color: var(--orange);
+}
+
+.login-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 2px;
+}
+
+.login-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: var(--sp-5);
+}
+
+.login-card form {
+  text-align: left;
+}
+
+.login-card .form-group {
+  margin-bottom: var(--sp-2);
+}
+
+.login-card .btn {
+  margin-top: var(--sp-1);
+  height: 44px;
+}
+
+/* ── User badge in sidebar ──────────────────────────────────────────── */
+.user-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-1) var(--sp-2);
+  margin-top: auto;
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--sp-2);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+.user-badge:hover {
+  color: var(--text-primary);
+}
+.user-badge .logout-btn {
+  margin-left: auto;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: var(--radius);
+}
+.user-badge .logout-btn:hover {
+  background: var(--orange-dim);
+  color: var(--orange);
+}

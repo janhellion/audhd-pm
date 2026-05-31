@@ -10,6 +10,7 @@
   <title>pm · AuDHD Task Manager</title>
   <link rel="stylesheet" href="/css/style.css?v=5">
   <link rel="stylesheet" href="/css/kanban.css?v=2">
+  <link rel="stylesheet" href="/css/auth.css?v=1">
 </head>
 <body>
 
@@ -43,6 +44,11 @@
         <span class="energy-pill med active" data-level="medium" onclick="setEnergy('medium')" title="Medium energy — normal flow"></span>
         <span class="energy-pill high" data-level="high" onclick="setEnergy('high')" title="High energy — tackle anything"></span>
       </div>
+    </div>
+    <div class="user-badge" onclick="switchView('settings')">
+      <span>👤</span>
+      <span id="userBadge">user</span>
+      <button class="logout-btn" onclick="event.stopPropagation();logout()">sign out</button>
     </div>
   </nav>
 
@@ -79,6 +85,7 @@
 <!-- Modal container -->
 <div id="modalContainer"></div>
 
+<script src="/js/auth.js"></script>
 <script src="/js/app.v5.js"></script>
 </body>
 </html>
