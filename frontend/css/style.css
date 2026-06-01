@@ -298,6 +298,23 @@ select.input {
   letter-spacing: 0;
 }
 
+.niki-logo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.3rem;
+  letter-spacing: 0.06em;
+}
+
+.niki-cat {
+  font-size: 0.55rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  letter-spacing: 0;
+  opacity: 0.6;
+  transform: translateY(1px);
+}
+
 .nav-item {
   display: flex;
   align-items: center;
