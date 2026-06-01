@@ -28,6 +28,19 @@ def init_db():
     import backend.models  # noqa: F401
     Base.metadata.create_all(bind=engine)
 
+    # Add new columns if missing (SQLite migration)
+    from sqlalchemy import inspect, text
+    inspector = inspect(engine)
+    columns = [c["name"] for c in inspector.get_columns("tasks")]
+    with engine.connect() as conn:
+        if "repeat" not in columns:
+            conn.execute(text("ALTER TABLE tasks ADD COLUMN repeat VARCHAR(20) DEFAULT ''"))
+        if "due_date" not in columns:
+            conn.execute(text("ALTER TABLE tasks ADD COLUMN due_date DATETIME"))
+        if "estimated_minutes" not in columns:
+            conn.execute(text("ALTER TABLE tasks ADD COLUMN estimated_minutes INTEGER"))
+        conn.commit()
+
     # Seed admin user
     db = SessionLocal()
     try:

@@ -43,7 +43,7 @@ function showLogin() {
     loginEl.innerHTML = `
       <div class="login-screen">
         <div class="login-card glass">
-          <div class="login-logo">⌂</div>
+          <div class="login-logo"></div>
           <h1 class="login-title">
             <span class="niki-cat">^ↀᴥↀ^</span><br>
             <span class="niki-name">Niki</span>

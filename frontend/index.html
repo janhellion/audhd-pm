@@ -8,7 +8,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <link rel="manifest" href="/manifest.json">
   <title>Niki · task manager</title>
-  <link rel="stylesheet" href="/css/style.css?v=7">
+  <link rel="stylesheet" href="/css/style.css?v=11">
   <link rel="stylesheet" href="/css/paper-theme.css?v=1">
   <link rel="stylesheet" href="/css/kanban.css?v=3">
   <link rel="stylesheet" href="/css/auth.css?v=2">
@@ -23,7 +23,6 @@
   <!-- Sidebar -->
   <nav class="sidebar" id="sidebar">
     <div class="sidebar-logo">
-      <span>⌂</span>
       <span class="niki-logo">
         <span class="niki-cat">^ↀᴥↀ^</span>
         <span class="niki-name">Niki</span>
@@ -37,6 +36,9 @@
     </button>
     <button class="nav-item" data-view="board" onclick="switchView('board')">
       <span>▤</span> Board
+    </button>
+    <button class="nav-item" data-view="calendar" onclick="switchView('calendar')">
+      <span>📅</span> Calendar
     </button>
     <button class="nav-item" data-view="projects" onclick="switchView('projects')">
       <span>▣</span> Projects
@@ -86,6 +88,7 @@
     <div id="view-dashboard" class="view-container"></div>
     <div id="view-tasks" class="view-container" style="display:none;"></div>
     <div id="view-board" class="view-container" style="display:none;"></div>
+    <div id="view-calendar" class="view-container" style="display:none;"></div>
     <div id="view-projects" class="view-container" style="display:none;"></div>
     <div id="view-settings" class="view-container" style="display:none;"></div>
   </main>
@@ -95,6 +98,6 @@
 <div id="modalContainer"></div>
 
 <script src="/js/auth.js?v=2"></script>
-<script src="/js/app.v5.js?v=2"></script>
+<script src="/js/app.v6.js"></script>
 </body>
 </html>

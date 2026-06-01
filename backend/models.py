@@ -66,6 +66,9 @@ class Task(Base):
     interest_level = Column(Integer, default=0)
     micro_step = Column(String(500), default="")
     is_banana = Column(Boolean, default=False)
+    repeat = Column(String(20), default="")  # daily, weekdays, weekly, monthday, ""
+    due_date = Column(DateTime, nullable=True)
+    estimated_minutes = Column(Integer, nullable=True)
     project_id = Column(Integer, ForeignKey("projects.id"), nullable=True)
     parent_id = Column(Integer, ForeignKey("tasks.id"), nullable=True)
     assignee_id = Column(Integer, ForeignKey("users.id"), nullable=True)

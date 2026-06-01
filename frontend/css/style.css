@@ -280,15 +280,12 @@ select.input {
 
 .sidebar-logo {
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: var(--orange);
   padding: var(--sp-1) 0;
   margin-bottom: var(--sp-2);
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--sp-1);
-  letter-spacing: -0.03em;
 }
 .sidebar-logo small {
   font-size: 0.6rem;
@@ -302,24 +299,24 @@ select.input {
   display: flex;
   flex-direction: column;
   align-items: center;
-  line-height: 1;
+  line-height: 1.1;
   gap: 0;
 }
 
 .niki-cat {
-  font-size: 0.6rem;
+  font-size: 0.9rem;
   color: var(--text-muted);
   font-family: var(--font-mono);
   letter-spacing: 0;
   line-height: 1;
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 .niki-name {
-  font-size: 1rem;
+  font-size: 1.5rem;
   font-weight: 400;
-  color: var(--text-muted);
-  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
   line-height: 1;
 }
 
@@ -906,6 +903,43 @@ body.safe-mode { font-size: 17px; }
 .empty-state {
   animation: fadeIn 400ms ease;
 }
+
+/* ── Calendar ────────────────────────────────────────────────────────── */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.cal-header {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+  padding: var(--sp-1) 0;
+}
+.cal-day {
+  background: var(--bg-glass);
+  border-radius: var(--radius);
+  padding: var(--sp-1);
+  min-height: 70px;
+  font-size: 0.75rem;
+}
+.cal-other { background: transparent; }
+.cal-today { background: var(--orange-dim); border: 1px solid var(--orange-dim); }
+.cal-num { display: block; font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 2px; }
+.cal-today .cal-num { color: var(--orange); }
+.cal-task {
+  font-size: 0.6rem; padding: 1px 4px; border-radius: 3px; margin-bottom: 1px;
+  cursor: pointer; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  color: var(--text-primary);
+}
+.cal-task-low { background: var(--status-warn-dim); border-left: 2px solid var(--energy-low); }
+.cal-task-medium { background: var(--status-subtle-dim); border-left: 2px solid var(--energy-med); }
+.cal-task-high { background: var(--status-calm-dim); border-left: 2px solid var(--energy-high); }
+.cal-more { font-size: 0.6rem; color: var(--text-muted); text-align: center; }
+.nav-item-mobile.active { color: var(--orange) !important; }
 
 /* ── Responsive ─────────────────────────────────────────────────────── */
 

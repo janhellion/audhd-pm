@@ -76,6 +76,38 @@ def complete_task(task_id: int, db: Session = Depends(get_db)):
     task.completed_at = datetime.utcnow()
     task.is_banana = False
     task.updated_at = datetime.utcnow()
+
+    # Handle recurring tasks — create next instance
+    if task.repeat and task.repeat != "none":
+        next_task = Task(
+            title=task.title,
+            description=task.description,
+            energy_level=task.energy_level,
+            priority=task.priority,
+            interest_level=task.interest_level,
+            micro_step=task.micro_step,
+            repeat=task.repeat,
+            project_id=task.project_id,
+            estimated_minutes=task.estimated_minutes,
+        )
+        # Calculate next due date
+        now = datetime.utcnow()
+        if task.repeat == "daily":
+            next_task.due_date = now + timedelta(days=1)
+        elif task.repeat == "weekdays":
+            d = now + timedelta(days=1)
+            while d.weekday() >= 5:  # Sat/Sun
+                d += timedelta(days=1)
+            next_task.due_date = d
+        elif task.repeat == "weekly":
+            next_task.due_date = now + timedelta(days=7)
+        elif task.repeat == "monthly":
+            m = now.month + 1
+            y = now.year + (m // 12)
+            m = m % 12 or 12
+            next_task.due_date = datetime(y, m, now.day)
+        db.add(next_task)
+
     db.commit()
     db.refresh(task)
     return task_to_response(task)

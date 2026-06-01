@@ -14,6 +14,9 @@ class TaskBase(BaseModel):
     interest_level: int = 0
     micro_step: str = ""
     is_banana: bool = False
+    repeat: str = ""
+    due_date: Optional[datetime] = None
+    estimated_minutes: Optional[int] = None
     project_id: Optional[int] = None
     parent_id: Optional[int] = None
     position: float = 0.0
@@ -32,6 +35,9 @@ class TaskUpdate(BaseModel):
     interest_level: Optional[int] = None
     micro_step: Optional[str] = None
     is_banana: Optional[bool] = None
+    repeat: Optional[str] = None
+    due_date: Optional[datetime] = None
+    estimated_minutes: Optional[int] = None
     project_id: Optional[int] = None
     parent_id: Optional[int] = None
     position: Optional[float] = None
@@ -64,6 +70,9 @@ def task_to_response(task: "Task") -> TaskResponse:
         "interest_level": task.interest_level or 0,
         "micro_step": task.micro_step or "",
         "is_banana": task.is_banana or False,
+        "repeat": task.repeat or "",
+        "due_date": task.due_date,
+        "estimated_minutes": task.estimated_minutes,
         "project_id": task.project_id,
         "parent_id": task.parent_id,
         "position": task.position or 0.0,
