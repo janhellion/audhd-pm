@@ -1,5 +1,5 @@
 /* =========================================================================
-   AuDHD Task Manager — Light Design System
+   Niki — Light Design System
    1:8 Proportion System · 8px Radius · Orange Accent #eb5e28
    ========================================================================= */
 
@@ -327,8 +327,8 @@ select.input {
 /* Main content */
 .main-content {
   flex: 1;
-  padding: var(--sp-3) var(--sp-4);
-  max-width: 1100px;
+  padding: var(--sp-5) var(--sp-6);
+  max-width: 1200px;
   margin: 0 auto;
   width: 100%;
   min-width: 0;
@@ -339,20 +339,21 @@ select.input {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: var(--sp-3);
+  padding-bottom: var(--sp-4);
   border-bottom: 1px solid var(--border-subtle);
-  margin-bottom: var(--sp-3);
-  gap: var(--sp-2);
+  margin-bottom: var(--sp-4);
+  gap: var(--sp-3);
 }
 
 .topbar-title h1 {
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: 400;
+  letter-spacing: -0.03em;
 }
 .topbar-title p {
   font-size: 0.85rem;
   color: var(--text-secondary);
-  margin-top: 2px;
+  margin-top: 4px;
 }
 
 .topbar-actions {
@@ -394,7 +395,7 @@ select.input {
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--sp-3);
+  gap: var(--sp-4);
 }
 
 .dashboard-grid > .full-width { grid-column: 1 / -1; }
@@ -882,19 +883,236 @@ body.safe-mode { font-size: 17px; }
 }
 
 /* ── Responsive ─────────────────────────────────────────────────────── */
+
+/* Hamburger toggle — hidden on desktop */
+.hamburger {
+  display: none;
+  position: fixed;
+  top: var(--sp-2);
+  left: var(--sp-2);
+  z-index: 1101;
+  width: 44px;
+  height: 44px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+  box-shadow: var(--shadow-card);
+  transition: all var(--transition-fast);
+}
+.hamburger:active { transform: scale(0.95); }
+
+/* Sidebar backdrop overlay */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  z-index: 1098;
+  animation: fadeIn 200ms ease;
+}
+
+/* Sidebar open class (toggled via JS) */
+.sidebar.open {
+  transform: translateX(0);
+  box-shadow: var(--shadow-modal);
+}
+
 @media (max-width: 768px) {
+  /* Sidebar off-canvas */
   .sidebar {
-    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 280px;
+    height: 100vh;
+    z-index: 1099;
+    transform: translateX(-105%);
+    transition: transform 250ms ease, box-shadow 250ms ease;
+    display: flex;
+    border-right: 1px solid var(--border-subtle);
   }
-  .dashboard-grid {
-    grid-template-columns: 1fr;
+
+  .hamburger {
+    display: flex;
   }
+
+  .sidebar-overlay.visible {
+    display: block;
+  }
+
+  /* Shift main content left — hamburger is fixed so body just gets a top offset */
+  .app-layout {
+    display: block;
+  }
+
   .main-content {
     padding: var(--sp-2);
+    padding-top: 64px; /* room for hamburger */
+    max-width: 100%;
   }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+    gap: var(--sp-3);
+  }
+
   .topbar {
     flex-direction: column;
     align-items: flex-start;
+    gap: var(--sp-2);
+    padding-bottom: var(--sp-3);
+    margin-bottom: var(--sp-3);
+  }
+
+  .topbar-title h1 {
+    font-size: 1.35rem;
+  }
+
+  .topbar-actions {
+    width: 100%;
+  }
+  .topbar-actions .btn {
+    width: 100%;
+    justify-content: center;
+    padding: var(--sp-2);
+    min-height: 44px;
+  }
+
+  /* Banana zone */
+  .banana-zone {
+    padding: var(--sp-2);
+  }
+  .banana-task {
+    font-size: 1.1rem;
+  }
+
+  /* Task cards — larger touch targets */
+  .task-card {
+    padding: var(--sp-3) var(--sp-2);
+  }
+  .task-check {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    font-size: 0.85rem;
+  }
+  .task-title {
+    font-size: 1rem;
+  }
+
+  .kanban-column {
+    padding: var(--sp-1);
+  }
+
+  /* Kanban card actions always visible on mobile (no hover) */
+  .kanban-card-actions {
+    opacity: 1;
+  }
+  .kanban-card-actions .btn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: var(--sp-1);
+  }
+
+  /* Modal fills available space */
+  .modal {
+    max-height: 95vh;
+    padding: var(--sp-3);
+    margin: var(--sp-1);
+  }
+
+  /* Project cards */
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Form rows stack vertically */
+  .form-row {
+    flex-direction: column;
+  }
+
+  /* Quick capture full width */
+  .quick-capture .flex {
+    flex-direction: column;
+    gap: var(--sp-1);
+  }
+  .quick-capture .btn {
+    width: 100%;
+    position: static;
+  }
+  .quick-capture input {
+    padding-right: var(--sp-2);
+  }
+
+  .btn {
+    min-height: 44px;
+    padding: var(--sp-2);
+  }
+  .input {
+    min-height: 44px;
+    font-size: 1rem;
+  }
+  select.input {
+    min-height: 44px;
+  }
+
+  /* Burnout banner wraps */
+  .burnout-banner {
+    flex-wrap: wrap;
+  }
+
+  /* View toggle wraps */
+  .view-toggle {
+    width: 100%;
+  }
+  .view-toggle button {
+    flex: 1;
+    text-align: center;
+    padding: var(--sp-2) var(--sp-1);
+    min-height: 44px;
+  }
+
+  /* Settings */
+  #view-settings .glass {
+    padding: var(--sp-3) !important;
+  }
+
+  /* Safety mode mobile */
+  body.safe-mode .main-content {
+    padding-top: var(--sp-2);
+  }
+  body.safe-mode .banana-task {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-content {
+    padding: var(--sp-1);
+    padding-top: 60px;
+  }
+  .banana-task {
+    font-size: 1rem;
+  }
+  .task-title {
+    font-size: 0.95rem;
+  }
+  .kanban-card-title {
+    font-size: 0.85rem;
+  }
+  .energy-pills {
+    gap: 10px;
+  }
+  .energy-pill {
+    width: 14px;
+    height: 14px;
   }
 }
 

@@ -1,5 +1,5 @@
 /* =========================================================================
-   AuDHD Task Manager — Auth & Session Management
+   Niki — Auth & Session Management
    ========================================================================= */
 
 let authToken = localStorage.getItem('pm_auth_token');
@@ -44,8 +44,8 @@ function showLogin() {
       <div class="login-screen">
         <div class="login-card glass">
           <div class="login-logo">⌂</div>
-          <h1 class="login-title">pm</h1>
-          <p class="login-subtitle">AuDHD Task Manager</p>
+          <h1 class="login-title">🐱 Niki</h1>
+          <p class="login-subtitle">task manager</p>
           <form id="loginForm" onsubmit="submitLogin(event)">
             <div class="form-group">
               <label>Username</label>

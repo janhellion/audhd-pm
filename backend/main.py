@@ -10,7 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.database import init_db
 from backend.routers import tasks, projects, dashboard, settings, auth, notifications
 
-app = FastAPI(title="AuDHD Task Manager", version="1.1.0")
+app = FastAPI(title="Niki", version="1.1.0")
 
 app.add_middleware(
     CORSMiddleware,

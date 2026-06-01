@@ -1,5 +1,5 @@
 /* =========================================================================
-   AuDHD Task Manager — Application Logic
+   Niki — Application Logic
    ========================================================================= */
 
 const API = '/api';
@@ -450,7 +450,7 @@ async function renderSettings(el) {
         </div>
         <div class="form-group">
           <label>Version</label>
-          <p class="text-muted" style="font-size:0.85rem;">AuDHD Task Manager v1.1.0</p>
+          <p class="text-muted" style="font-size:0.85rem;">Niki v1.1.0</p>
         </div>
         <div class="form-group">
           <label>Principles</label>

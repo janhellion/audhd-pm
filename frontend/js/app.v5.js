@@ -1,9 +1,33 @@
 /* =========================================================================
-   AuDHD Task Manager — Application Logic
+   Niki — Application Logic
    ========================================================================= */
 
 const API = '/api';
 let state = { view: 'dashboard', safeMode: false, energy: 'medium' };
+
+/* ── Theme (dark/light) with localStorage persistence ───────────────── */
+function initTheme() {
+  const saved = localStorage.getItem('pm-theme');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = saved || (prefersDark ? 'dark' : 'light');
+  document.body.classList.remove('theme-light', 'theme-dark');
+  document.body.classList.add(`theme-${theme}`);
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.textContent = theme === 'dark' ? '🌙' : '☀️';
+}
+
+function toggleTheme() {
+  const isDark = document.body.classList.contains('theme-dark');
+  const theme = isDark ? 'light' : 'dark';
+  document.body.classList.remove('theme-light', 'theme-dark');
+  document.body.classList.add(`theme-${theme}`);
+  localStorage.setItem('pm-theme', theme);
+  const btn = document.getElementById('themeToggle');
+  if (btn) btn.textContent = theme === 'dark' ? '🌙' : '☀️';
+}
+
+// Init theme on load
+document.addEventListener('DOMContentLoaded', initTheme);
 
 /* ── API Helpers ────────────────────────────────────────────────────── */
 async function api(method, path, body) {
@@ -19,8 +43,25 @@ const post   = (p, b) => api('POST', p, b);
 const put    = (p, b) => api('PUT', p, b);
 const del    = (p) => api('DELETE', p);
 
+/* ── Mobile Sidebar ─────────────────────────────────────────────────── */
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('sidebarOverlay');
+  const hamburger = document.getElementById('hamburger');
+  if (!sidebar) return;
+  sidebar.classList.toggle('open');
+  if (overlay) overlay.classList.toggle('visible');
+  if (hamburger) hamburger.textContent = sidebar.classList.contains('open') ? '✕' : '☰';
+}
+
+// Close sidebar on mobile when switching views — wrap existing switchView
 /* ── View Switcher ──────────────────────────────────────────────────── */
 function switchView(name) {
+  // Close sidebar if open (mobile)
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar && sidebar.classList.contains('open')) {
+    toggleSidebar();
+  }
   state.view = name;
   document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.view === name));
   document.querySelectorAll('.view-container').forEach(c => c.style.display = c.id === `view-${name}` ? '' : 'none');
@@ -37,11 +78,11 @@ function switchView(name) {
 
   const actions = document.getElementById('topbarActions');
   if (name === 'tasks' || name === 'dashboard' || name === 'board') {
-    actions.innerHTML = `<button class="btn btn-orange" onclick="openQuickCapture()">+ New Task</button>`;
+    actions.innerHTML = `<button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="Toggle dark/light mode">${document.body.classList.contains('theme-dark') ? '🌙' : '☀️'}</button><button class="btn btn-orange" onclick="openQuickCapture()">+ New Task</button>`;
   } else if (name === 'projects') {
-    actions.innerHTML = `<button class="btn btn-orange" onclick="openNewProject()">+ New Project</button>`;
+    actions.innerHTML = `<button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="Toggle dark/light mode">${document.body.classList.contains('theme-dark') ? '🌙' : '☀️'}</button><button class="btn btn-orange" onclick="openNewProject()">+ New Project</button>`;
   } else {
-    actions.innerHTML = '';
+    actions.innerHTML = `<button class="theme-toggle" onclick="toggleTheme()" id="themeToggle" title="Toggle dark/light mode">${document.body.classList.contains('theme-dark') ? '🌙' : '☀️'}</button>`;
   }
 
   renderView(name);
@@ -426,7 +467,7 @@ async function renderSettings(el) {
       </div>
       <div class="form-group">
         <label>Version</label>
-        <p class="text-muted" style="font-size:0.85rem;">AuDHD Task Manager v1.0.0</p>
+        <p class="text-muted" style="font-size:0.85rem;">Niki v1.0.0</p>
       </div>
       <div class="form-group">
         <label>Principles</label>

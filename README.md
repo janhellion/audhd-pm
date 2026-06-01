@@ -1,4 +1,4 @@
-# pm — AuDHD Task Manager
+# Niki — Task Manager
 
 A self-hosted task management platform built specifically for AuDHD (Autism + ADHD) brains. Shifts focus from *information tracking* to *execution support*.
 
