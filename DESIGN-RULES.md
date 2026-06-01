@@ -90,3 +90,18 @@
 | Font/spacing customizable | ○ | 1:8 system provides good defaults, but no user-facing font/contrast controls yet |
 | Test with neurodivergent users | ○ | Not yet done |
 | Dark mode | ✓ | Theme toggle with full dark palette |
+
+---
+
+## Additional Insights — Medium (2024)
+
+**Key additions from the Medium article:**
+
+- **Avoid justified text** — always left-align for predictable spacing (helps dyslexic readers)
+- **Offer font options** — OpenDyslexic, Arial, Verdana as accessible typeface choices
+- **Multiple task completion paths** — keyboard shortcuts, voice commands, gesture-based where possible
+- **Allow view mode switching** — minimalist vs detailed view toggle
+- **Balance simplicity with functionality** — don't oversimplify to the point of losing depth
+- **Don't stereotype** — base decisions on research and user feedback, not assumptions
+- **Diverse testing** — neurodivergent users are underrepresented; actively recruit them for testing
+- **Inclusive design benefits all users** — designing for neurodivergence improves UX for everyone
