@@ -44,8 +44,11 @@ function showLogin() {
       <div class="login-screen">
         <div class="login-card glass">
           <div class="login-logo">⌂</div>
-          <h1 class="login-title">NIKI</h1>
-          <p class="login-subtitle">task manager <span class="niki-cat">^ↀᴥↀ^</span></p>
+          <h1 class="login-title">
+            <span class="niki-cat">^ↀᴥↀ^</span><br>
+            <span class="niki-name">Niki</span>
+          </h1>
+          <p class="login-subtitle">task manager</p>
           <form id="loginForm" onsubmit="submitLogin(event)">
             <div class="form-group">
               <label>Username</label>
